@@ -27,12 +27,16 @@ public class DeclarationFormatter{
     Declaration   declaration        = null;
     Declaration[] declarations       = new Declaration[100];
     int           declarationCounter = 0;
+    java.util.Scanner scanner;
     // check for input
     if (args.length == 0)
     {
-      System.exit(4);
+      scanner = new java.util.Scanner(System.in);
+      System.out.println("Using System.in for input");
+    } else {
+      scanner = new java.util.Scanner(args[0]);
+      System.out.println("Using args for input: " + args[0]);
     }
-    java.util.Scanner scanner = new java.util.Scanner(args[0]);
     String token = "";
     // first remember the data, types, constants or field-symbols
     // opening token
@@ -120,7 +124,14 @@ public class DeclarationFormatter{
           );
       lines.add(line);
     } // for each delaration
-
+    if (lines.size() > 0)
+    {
+      if (opening != "")
+      {
+        lines.add(0, "  " + opening);     // insert the declaration opening
+      }
+      lines.add("  ."); // in order to terminate the declaration statement
+    }
     for(String line: lines){
       System.out.println(line);
     }
