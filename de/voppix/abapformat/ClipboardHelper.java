@@ -18,8 +18,12 @@ import java.awt.datatransfer.DataFlavor;      // for get
  * contents owning program), see
  * https://wiki.ubuntu.com/ClipboardPersistence
  *
- * This can be circumvented by leaving the program running (e.g.
- * `System.in.read()');
+ * This can be circumvented by 
+ * 
+ * A) leaving the program running (e.g.
+ * `System.in.read();')
+ * 
+ * B) using a clipboard manager
  * Maybe the contents can also be retained by some clipboard manager
  * as mentioned on: http://en.wikipedia.org/wiki/Clipboard_manager
  *
@@ -33,6 +37,9 @@ import java.awt.datatransfer.DataFlavor;      // for get
  *   only be retrieved from the clipboard manager's history, quite
  *   strange. Not good.
  * )
+ *
+ * C) using a clipboard console tool instead (e.g. xclip)
+ *
  */
 public class ClipboardHelper //implements ClipboardOwner
 {

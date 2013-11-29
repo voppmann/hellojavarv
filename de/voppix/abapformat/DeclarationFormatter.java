@@ -14,8 +14,36 @@ import java.util.ArrayList;
  * - Make all typification phrases start in the same column,
  * - Make all types referred to start in the same column.
  *
+ * Terms used:
+ * - DeclarationStatement
+ * - Declaration
+ * - DeclarationPart
+ *
  * @author: Robert Voppmann
  * @version: 0.1
+ *
+ * TODO:
+ * - handle more than one declaration statements
+ * - handle comments
+ * - command-line parameters for
+ *   - reading input from STDIN
+ *   - reading input from String argument
+ *   - reading input from clipboard
+ *   - reading input from primary selection
+ *   - writing output to STDOUT
+ *   - writing output to clipboard (does not work in X11)
+ *   - writing output to primary selection (does not work in X11)
+ * - debugging info should not be written to stdout
+ *
+ * Notes:
+ * - A declaration statement starts with a keyword such as `DATA' or
+ *   `FIELD-SYMBOLS:' and ends with a `.'
+ * - Declarations within a declaration statement are separated by
+ *   comma.
+ * - Comments can be included in the declaration statement either as
+ *   full-line comments (starting with `*' at the beginning of the 
+ *   line and ending at EOL) or
+ *   as line-end comments (starting with `"' and ending at EOL
  */
 public class DeclarationFormatter{
   enum         declarationParts {VARIABLE, TYPIFICATION, TYPE};
@@ -272,11 +300,17 @@ public class DeclarationFormatter{
 
 /////////////////////////////////////////////////////////////////////
 
-/** A Declaration holds the part of the declaration:
+/** A Declaration holds the parts of the declaration
+ *
+ * These are the parts
  * - variable 
  * - typification
  * - type
- * - value?
+ * - optional: value_keyword + value
+ *   (the value_keyword is always VALUE (case-insensitive),
+ *   the value may consist of several tokens if surrounded by single
+ *   quotes, or it is just one single token (reference to some
+ *   constant).
  * As in: lt_itab TYPE TABLE OF ls_itab,
  * where lt_itab is the declared variable, TYPE TABLE OF is the
  * typification and ls_itab is the type.
@@ -288,6 +322,7 @@ class Declaration{
 
   Declaration()
   {
+    //empty constructor
   }
   Declaration(String variable, String typification, String type)
   {
